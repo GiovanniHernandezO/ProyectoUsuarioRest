@@ -6,6 +6,7 @@ import com.ejemplo.service.UsuarioService;
 import com.ejemplo.vo.UsuarioVO;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import org.apache.log4j.Logger;
@@ -82,11 +83,11 @@ public class UsuarioController {
             
             return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
         } catch (JsonSyntaxException e) {
-            String mensaje = "Error: Ha ocurrido un error al crear usuario";
+            String mensaje = "Error: Ha ocurrido un error al crear usuario - JSE";
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
-            String mensaje = "Error: Ha ocurrido un error al obtener usuario";
+            String mensaje = "Error: Ha ocurrido un error al obtener usuario - EX";
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -121,11 +122,11 @@ public class UsuarioController {
 
             return new ResponseEntity<>(new MensajeErrorDTO("Usuario eliminado correctamente"), HttpStatus.OK);
         } catch (JsonSyntaxException e) {
-            String mensaje = "Error: Ha ocurrido un error al eliminar usuario";
+            String mensaje = "Error: Ha ocurrido un error al eliminar usuario - JSE";
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
-            String mensaje = "Error: Ha ocurrido un error al obtener usuario";
+            String mensaje = "Error: Ha ocurrido un error al obtener usuario - EX";
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -183,11 +184,11 @@ public class UsuarioController {
 
             return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
         } catch (JsonSyntaxException e) {
-            String mensaje = "Error: Ha ocurrido un error al actualizar usuario";
+            String mensaje = "Error: Ha ocurrido un error al actualizar usuario - JSE";
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
-            String mensaje = "Error: Ha ocurrido un error al obtener usuario";
+            String mensaje = "Error: Ha ocurrido un error al obtener usuario - EX";
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -215,11 +216,34 @@ public class UsuarioController {
 
             return new ResponseEntity<>(usuarioVO, HttpStatus.OK);
         } catch (JsonSyntaxException e) {
-            String mensaje = "Error: Ha ocurrido un error al obtener usuario";
+            String mensaje = "Error: Ha ocurrido un error al obtener usuario - JSE";
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
-            String mensaje = "Error: Ha ocurrido un error al obtener usuario";
+            String mensaje = "Error: Ha ocurrido un error al obtener usuario - EX";
+            LOGGER.error(mensaje + " - " + e.getMessage());
+            return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    public ResponseEntity<Object> getListadoUsuarios() {
+        try {
+            
+            List<UsuarioVO> listaUsuarioVO = usuarioService.listarUsuarios();
+            if (listaUsuarioVO == null || listaUsuarioVO.isEmpty()) {
+                String mensaje = "Error: no ha sido posible listar usuarios";
+                LOGGER.info(mensaje);
+                return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.FORBIDDEN);
+            }
+
+            return new ResponseEntity<>(listaUsuarioVO, HttpStatus.OK);
+        } catch (JsonSyntaxException e) {
+            String mensaje = "Error: Ha ocurrido un error al obtener listado de usuarios - JSE";
+            LOGGER.error(mensaje + " - " + e.getMessage());
+            return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            String mensaje = "Ha ocurrido un error al obtener listado de usuarios - EX";
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         }

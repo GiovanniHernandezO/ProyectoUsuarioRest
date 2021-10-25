@@ -7,6 +7,7 @@ import com.ejemplo.util.CommonUtil;
 import com.ejemplo.util.TokenUtil;
 import com.ejemplo.vo.PhoneVO;
 import com.ejemplo.vo.UsuarioVO;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -47,7 +48,7 @@ public class UsuarioService {
                 phoneVO.setId(UUID.randomUUID());
                 phoneVO.setIdUsuario(usuarioVO.getId());
             }
-            
+
             usuarioRepository.createUsuario(usuarioVO);
 
             UsuarioDTO usuarioDTO = new UsuarioDTO();
@@ -91,7 +92,7 @@ public class UsuarioService {
             usuarioDTO.setToken(usuarioVO.getToken());
             resultado.put(Boolean.FALSE, usuarioDTO);
         } catch (Exception e) {
-            LOGGER.error("Ha ocurrido un error al crear usuario - Error: " + e.getMessage());
+            LOGGER.error("Ha ocurrido un error al actualizar usuario - Error: " + e.getMessage());
             resultado.put(Boolean.TRUE, null);
         }
 
@@ -118,11 +119,17 @@ public class UsuarioService {
     }
 
     public List<UsuarioVO> listarUsuarios() {
-        List<UsuarioVO> listaUsuariosVO = usuarioRepository.listarUsuarios();
-        for (UsuarioVO usuarioVO : listaUsuariosVO) {
-            List<PhoneVO> listaPhoneVO = phoneRepository.getPhonesByIdUsuario(usuarioVO.getId());
-            usuarioVO.setPhones(listaPhoneVO);
+        List<UsuarioVO> listaUsuariosVO = new ArrayList<>();
+        try {
+            listaUsuariosVO = usuarioRepository.listarUsuarios();
+            for (UsuarioVO usuarioVO : listaUsuariosVO) {
+                List<PhoneVO> listaPhoneVO = phoneRepository.getPhonesByIdUsuario(usuarioVO.getId());
+                usuarioVO.setPhones(listaPhoneVO);
+            }
+        } catch (Exception e) {
+            LOGGER.error("Ha ocurrido un error al obtener listado de usuarios - Error: " + e.getMessage());
         }
+
         return listaUsuariosVO;
     }
 
@@ -135,7 +142,7 @@ public class UsuarioService {
         } catch (Exception e) {
             LOGGER.error("Ha ocurrido un error al obtener usuario - Error: " + e.getMessage());
         }
-        
+
         return usuarioVO;
     }
 
