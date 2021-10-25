@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UsuarioRepo extends JpaRepository<UsuarioVO, UUID> {
-    
+
     @Query("select u from UsuarioVO u where u.email like %?1")
     List<UsuarioVO> validarExistenciaMail(String mail);
 }

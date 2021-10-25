@@ -9,10 +9,10 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PhoneRepo extends JpaRepository<PhoneVO, UUID> {
-    
+
     @Query("delete from PhoneVO u where u.idUsuario = ?1")
     void deleteAllPhonesByIdUsuario(UUID idUsuario);
-    
+
     @Query("select u from PhoneVO u where u.idUsuario = ?1")
     List<PhoneVO> getListPhonesByIdUsuario(UUID idUsuario);
 }

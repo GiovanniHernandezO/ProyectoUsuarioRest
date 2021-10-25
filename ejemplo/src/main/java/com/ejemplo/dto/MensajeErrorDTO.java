@@ -5,7 +5,7 @@ public class MensajeErrorDTO {
     public MensajeErrorDTO(String mensaje) {
         this.mensaje = mensaje;
     }
-    
+
     private String mensaje;
 
     public String getMensaje() {

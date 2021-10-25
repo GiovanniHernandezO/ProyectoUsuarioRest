@@ -10,6 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "PHONE")
 public class PhoneVO implements Serializable {
+
     @Id
     private UUID id;
     @Column(name = "IDUSUARIO")
@@ -28,7 +29,7 @@ public class PhoneVO implements Serializable {
     public void setId(UUID id) {
         this.id = id;
     }
-    
+
     public UUID getIdUsuario() {
         return idUsuario;
     }

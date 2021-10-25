@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class FilterValidation implements Filter {
-    
+
     @Override
     public void init(FilterConfig fc) throws ServletException {
     }
