@@ -21,10 +21,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class UsuarioService {
 
-    @Autowired(required = true)
+    @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @Autowired(required = true)
+    @Autowired
     private PhoneRepository phoneRepository;
 
     @Autowired

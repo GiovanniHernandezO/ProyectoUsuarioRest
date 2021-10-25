@@ -15,6 +15,11 @@ http://localhost:8080/ejemplo-rest/user/update
 http://localhost:8080/ejemplo-rest/user/get
 http://localhost:8080/ejemplo-rest/user/delete
 
-Dentro del proyecto (ejemplo\src\main\resources\sql) se encuentra la carpeta sql en donde está el archivo de estructura de la base de datos con la creación de las tablas.
+Dentro del proyecto (ejemplo\src\main\resources\sql) se encuentra la carpeta sql en donde está el archivo de estructura de la base de datos con la creación de las tablas. El nombre de la base de datos es test.
+
+spring.datasource.url=jdbc:h2:~/test;DB_CLOSE_ON_EXIT=FALSE;AUTO_SERVER=TRUE
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=sa
+spring.datasource.password=
 
 Tanto la expresión regular para la validación de password como para validar el email se configuran en el archivo application.properties.

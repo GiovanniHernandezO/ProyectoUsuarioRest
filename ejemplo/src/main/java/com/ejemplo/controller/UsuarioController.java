@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,37 +31,40 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+    
+    @Autowired
+    private Environment env;
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<Object> createUsuario(@RequestBody String jsonSolicitud) {
         try {
             if (jsonSolicitud == null || jsonSolicitud.isEmpty()) {
-                String mensaje = "Error: data no encontrada";
+                String mensaje = env.getProperty("error.data.no.encontrada");
                 LOGGER.info(mensaje);
                 return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.BAD_REQUEST);
             }
 
             Gson gson = new Gson();
             UsuarioVO usuario = gson.fromJson(jsonSolicitud, UsuarioVO.class);
+            
+            //validar password con expresion regular en application.properties
+            String pass = usuario.getPassword();
+            if (!usuarioService.passValidator(pass)) {
+                String mensaje = env.getProperty("error.password.valida");
+                LOGGER.info(mensaje);
+                return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.FORBIDDEN);
+            }
 
             //validar correo con expresion regular en application.properties
             String mail = usuario.getEmail();
             if (!usuarioService.emailValidator(mail)) {
-                String mensaje = "Error: correo no válido";
+                String mensaje = env.getProperty("error.correo.valido");
                 LOGGER.info(mensaje);
                 return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.BAD_REQUEST);
             }
 
             if (!usuarioService.validarExistenciaMail(mail)) {
-                String mensaje = "Error: El correo ya registrado";
-                LOGGER.info(mensaje);
-                return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.FORBIDDEN);
-            }
-
-            //validar password con expresion regular en application.properties
-            String pass = usuario.getPassword();
-            if (usuarioService.passValidator(pass)) {
-                String mensaje = "Error: password no válida";
+                String mensaje = env.getProperty("error.correo.registrado");
                 LOGGER.info(mensaje);
                 return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.FORBIDDEN);
             }
@@ -76,18 +80,18 @@ public class UsuarioController {
             }
 
             if (error) {
-                String mensaje = "Error: no ha sido posible crear usuario";
+                String mensaje = env.getProperty("error.crear.usuario");
                 LOGGER.info(mensaje);
                 return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.FORBIDDEN);
             }
 
             return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
         } catch (JsonSyntaxException e) {
-            String mensaje = "Error: Ha ocurrido un error al crear usuario - JSE";
+            String mensaje = env.getProperty("error.crear.usuario.jse");
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
-            String mensaje = "Error: Ha ocurrido un error al crear usuario - EX";
+            String mensaje = env.getProperty("error.crear.usuario.ex");
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -97,7 +101,7 @@ public class UsuarioController {
     public ResponseEntity<Object> deleteUsuario(@RequestBody String idUsuario) {
         try {
             if (idUsuario == null || idUsuario.isEmpty()) {
-                String mensaje = "Error: identificador no encontrado";
+                String mensaje = env.getProperty("error.identificador.no.encontrado");
                 LOGGER.info(mensaje);
                 return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.BAD_REQUEST);
             }
@@ -108,25 +112,25 @@ public class UsuarioController {
             UUID id = usuarioVO.getId();
             UsuarioVO usuario = usuarioService.getUsuario(id);
             if (usuario == null) {
-                String mensaje = "Error: usuario no encontrado en el sistema";
+                String mensaje = env.getProperty("error.usuario.no.encontrado");
                 LOGGER.info(mensaje);
                 return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.BAD_REQUEST);
             }
 
             Boolean resultado = usuarioService.deleteUsuario(id);
             if (!resultado) {
-                String mensaje = "Error: ha ocurrido un error al eliminar usuario";
+                String mensaje = env.getProperty("error.eliminar.usuario");
                 LOGGER.info(mensaje);
                 return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.FORBIDDEN);
             }
 
-            return new ResponseEntity<>(new MensajeErrorDTO("Usuario eliminado correctamente"), HttpStatus.OK);
+            return new ResponseEntity<>(new MensajeErrorDTO(env.getProperty("usuario.eliminado.correctamente")), HttpStatus.OK);
         } catch (JsonSyntaxException e) {
-            String mensaje = "Error: Ha ocurrido un error al eliminar usuario - JSE";
+            String mensaje = env.getProperty("error.eliminar.usuario.jse");
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
-            String mensaje = "Error: Ha ocurrido un error al eliminar usuario - EX";
+            String mensaje = env.getProperty("error.eliminar.usuario.ex");
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -136,34 +140,34 @@ public class UsuarioController {
     public ResponseEntity<Object> updateUsuario(@RequestBody String jsonSolicitud) {
         try {
             if (jsonSolicitud == null || jsonSolicitud.isEmpty()) {
-                String mensaje = "Error: data no encontrada";
+                String mensaje = env.getProperty("error.data.no.encontrada");
                 LOGGER.info(mensaje);
                 return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.BAD_REQUEST);
             }
 
             Gson gson = new Gson();
             UsuarioVO usuario = gson.fromJson(jsonSolicitud, UsuarioVO.class);
+            
+            //validar password con expresion regular en application.properties
+            String pass = usuario.getPassword();
+            if (!usuarioService.passValidator(pass)) {
+                String mensaje = env.getProperty("error.password.valida");
+                LOGGER.info(mensaje);
+                return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.FORBIDDEN);
+            }
 
             //validar correo con expresion regular en application.properties
             String mail = usuario.getEmail();
             if (!usuarioService.emailValidator(mail)) {
-                String mensaje = "Error: correo no válido";
+                String mensaje = env.getProperty("error.correo.valido");
                 LOGGER.info(mensaje);
                 return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.BAD_REQUEST);
             }
 
             if (usuarioService.validarExistenciaMail(mail)) {
-                String mensaje = "Error: correo ya existe en el sistema";
+                String mensaje = env.getProperty("error.correo.registrado");
                 LOGGER.info(mensaje);
                 return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.BAD_REQUEST);
-            }
-
-            //validar password con expresion regular en application.properties
-            String pass = usuario.getPassword();
-            if (!usuarioService.passValidator(pass)) {
-                String mensaje = "Error: password no válida";
-                LOGGER.info(mensaje);
-                return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.FORBIDDEN);
             }
 
             Map<Boolean, UsuarioDTO> resultado = usuarioService.createUsuario(usuario);
@@ -177,18 +181,18 @@ public class UsuarioController {
             }
 
             if (error) {
-                String mensaje = "Error: no ha sido posible actualizar usuario";
+                String mensaje = env.getProperty("error.actualizar.usuario");
                 LOGGER.info(mensaje);
                 return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.FORBIDDEN);
             }
 
             return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
         } catch (JsonSyntaxException e) {
-            String mensaje = "Error: Ha ocurrido un error al actualizar usuario - JSE";
+            String mensaje = env.getProperty("error.actualizar.usuario.jse");
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
-            String mensaje = "Error: Ha ocurrido un error al actualizar usuario - EX";
+            String mensaje = env.getProperty("error.actualizar.usuario.ex");
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -198,7 +202,7 @@ public class UsuarioController {
     public ResponseEntity<Object> getUsuario(@RequestBody String idUsuario) {
         try {
             if (idUsuario == null || idUsuario.isEmpty()) {
-                String mensaje = "Error: identificador no encontrado";
+                String mensaje = env.getProperty("error.identificador.no.encontrado");
                 LOGGER.info(mensaje);
                 return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.BAD_REQUEST);
             }
@@ -209,41 +213,40 @@ public class UsuarioController {
             UUID id = usuarioVO.getId();
             usuarioVO = usuarioService.getUsuario(id);
             if (usuarioVO == null) {
-                String mensaje = "Error: usuario no encontrado en el sistema";
+                String mensaje = env.getProperty("error.usuario.no.encontrado");
                 LOGGER.info(mensaje);
                 return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.FORBIDDEN);
             }
 
             return new ResponseEntity<>(usuarioVO, HttpStatus.OK);
         } catch (JsonSyntaxException e) {
-            String mensaje = "Error: Ha ocurrido un error al obtener usuario - JSE";
+            String mensaje = env.getProperty("error.obtener.usuario.jse");
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
-            String mensaje = "Error: Ha ocurrido un error al obtener usuario - EX";
+            String mensaje = env.getProperty("error.obtener.usuario.ex");
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @RequestMapping(value = "/getAll", method = RequestMethod.GET)
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET, consumes = MediaType.ALL_VALUE)
     public ResponseEntity<Object> getListadoUsuarios() {
         try {
-
             List<UsuarioVO> listaUsuarioVO = usuarioService.listarUsuarios();
             if (listaUsuarioVO == null || listaUsuarioVO.isEmpty()) {
-                String mensaje = "Error: no ha sido posible listar usuarios";
+                String mensaje = env.getProperty("error.obtener.listado.usuarios");
                 LOGGER.info(mensaje);
                 return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.FORBIDDEN);
             }
 
             return new ResponseEntity<>(listaUsuarioVO, HttpStatus.OK);
         } catch (JsonSyntaxException e) {
-            String mensaje = "Error: Ha ocurrido un error al obtener listado de usuarios - JSE";
+            String mensaje = env.getProperty("error.obtener.listado.usuarios.jse");
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
-            String mensaje = "Error: Ha ocurrido un error al obtener listado de usuarios - EX";
+            String mensaje = env.getProperty("error.obtener.listado.usuarios.ex");
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         }
