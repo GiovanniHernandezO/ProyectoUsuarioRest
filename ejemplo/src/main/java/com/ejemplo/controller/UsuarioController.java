@@ -5,6 +5,7 @@ import com.ejemplo.dto.UsuarioDTO;
 import com.ejemplo.service.UsuarioService;
 import com.ejemplo.vo.UsuarioVO;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import java.util.Map;
 import java.util.UUID;
 import org.apache.log4j.Logger;
@@ -80,8 +81,12 @@ public class UsuarioController {
             }
             
             return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (JsonSyntaxException e) {
             String mensaje = "Error: Ha ocurrido un error al crear usuario";
+            LOGGER.error(mensaje + " - " + e.getMessage());
+            return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            String mensaje = "Error: Ha ocurrido un error al obtener usuario";
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -115,8 +120,12 @@ public class UsuarioController {
             }
 
             return new ResponseEntity<>(new MensajeErrorDTO("Usuario eliminado correctamente"), HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (JsonSyntaxException e) {
             String mensaje = "Error: Ha ocurrido un error al eliminar usuario";
+            LOGGER.error(mensaje + " - " + e.getMessage());
+            return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            String mensaje = "Error: Ha ocurrido un error al obtener usuario";
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -173,8 +182,12 @@ public class UsuarioController {
             }
 
             return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
-        } catch (Exception e) {
+        } catch (JsonSyntaxException e) {
             String mensaje = "Error: Ha ocurrido un error al actualizar usuario";
+            LOGGER.error(mensaje + " - " + e.getMessage());
+            return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception e) {
+            String mensaje = "Error: Ha ocurrido un error al obtener usuario";
             LOGGER.error(mensaje + " - " + e.getMessage());
             return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -201,6 +214,10 @@ public class UsuarioController {
             }
 
             return new ResponseEntity<>(usuarioVO, HttpStatus.OK);
+        } catch (JsonSyntaxException e) {
+            String mensaje = "Error: Ha ocurrido un error al obtener usuario";
+            LOGGER.error(mensaje + " - " + e.getMessage());
+            return new ResponseEntity<>(new MensajeErrorDTO(mensaje), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception e) {
             String mensaje = "Error: Ha ocurrido un error al obtener usuario";
             LOGGER.error(mensaje + " - " + e.getMessage());

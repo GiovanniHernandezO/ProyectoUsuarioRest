@@ -141,11 +141,11 @@ public class UsuarioService {
 
     public Boolean emailValidator(String email) {
         String value = env.getProperty("expresion.regular.correo");
-        return CommonUtil.emailValidator(email, value);
+        return CommonUtil.validator(email, value);
     }
 
     public Boolean passValidator(String pass) {
         String value = env.getProperty("expresion.regular.password");
-        return CommonUtil.emailValidator(pass, value);
+        return CommonUtil.validator(pass, value);
     }
 }
