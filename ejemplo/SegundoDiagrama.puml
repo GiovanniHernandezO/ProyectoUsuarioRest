@@ -1,0 +1,228 @@
+@startuml
+annotation java.lang.Override
+annotation java.lang.SuppressWarnings
+annotation javax.persistence.Column
+annotation javax.persistence.Entity
+annotation javax.persistence.Id
+annotation javax.persistence.OneToMany
+annotation javax.persistence.Table
+annotation javax.persistence.Temporal
+annotation org.springframework.beans.factory.annotation.Autowired
+annotation org.springframework.boot.autoconfigure.SpringBootApplication
+annotation org.springframework.context.annotation.Bean
+annotation org.springframework.context.annotation.Configuration
+annotation org.springframework.context.annotation.Import
+annotation org.springframework.data.jpa.repository.Query
+annotation org.springframework.stereotype.Component
+annotation org.springframework.stereotype.Repository
+annotation org.springframework.stereotype.Service
+annotation org.springframework.transaction.annotation.EnableTransactionManagement
+annotation org.springframework.web.bind.annotation.CrossOrigin
+annotation org.springframework.web.bind.annotation.RequestBody
+annotation org.springframework.web.bind.annotation.RequestMapping
+annotation org.springframework.web.bind.annotation.RestController
+annotation springfox.documentation.swagger2.annotations.EnableSwagger2
+class com.ejemplo.EjemploApplication
+class com.ejemplo.ServletInitializer
+class com.ejemplo.configuration.FilterValidation
+class com.ejemplo.configuration.GeneralConfiguration
+class com.ejemplo.configuration.SwaggerConfiguration
+class com.ejemplo.configuration.WebMvcConfiguration
+class com.ejemplo.controller.UsuarioController
+class com.ejemplo.dto.MensajeErrorDTO
+class com.ejemplo.dto.UsuarioDTO
+class com.ejemplo.repository.impl.PhoneRepositoryImpl
+class com.ejemplo.repository.impl.UsuarioRepositoryImpl
+class com.ejemplo.service.UsuarioService
+class com.ejemplo.util.CommonUtil
+class com.ejemplo.util.TokenUtil
+class com.ejemplo.vo.PhoneVO
+class com.ejemplo.vo.UsuarioVO
+class com.google.gson.Gson
+class com.google.gson.JsonSyntaxException
+class io.jsonwebtoken.Claims
+class io.jsonwebtoken.Jwts
+class io.jsonwebtoken.SignatureAlgorithm
+class java.io.IOException
+class java.util.ArrayList
+class java.util.Date
+class java.util.HashMap
+class java.util.LinkedHashMap
+class java.util.List
+class java.util.Map
+class java.util.Optional
+class java.util.UUID
+class java.util.regex.Matcher
+class java.util.regex.Pattern
+class javax.persistence.CascadeType
+class javax.persistence.FetchType
+class javax.servlet.FilterChain
+class javax.servlet.FilterConfig
+class javax.servlet.ServletException
+class javax.servlet.ServletRequest
+class javax.servlet.ServletResponse
+class javax.servlet.http.HttpServletRequest
+class javax.servlet.http.HttpServletResponse
+class org.apache.log4j.Logger
+class org.springframework.boot.SpringApplication
+class org.springframework.boot.builder.SpringApplicationBuilder
+class org.springframework.boot.web.servlet.FilterRegistrationBean
+class org.springframework.boot.web.servlet.support.SpringBootServletInitializer
+class org.springframework.core.env.Environment
+class org.springframework.http.HttpStatus
+class org.springframework.http.MediaType
+class org.springframework.http.ResponseEntity
+class org.springframework.web.bind.annotation.RequestMethod
+class org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
+class org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
+class springfox.documentation.builders.PathSelectors
+class springfox.documentation.builders.RequestHandlerSelectors
+class springfox.documentation.spi.DocumentationType
+class springfox.documentation.spring.web.plugins.Docket
+interface com.ejemplo.repo.PhoneRepo
+interface com.ejemplo.repo.UsuarioRepo
+interface com.ejemplo.repository.PhoneRepository
+interface com.ejemplo.repository.UsuarioRepository
+interface java.io.Serializable
+interface javax.servlet.Filter
+interface org.springframework.data.jpa.repository.JpaRepository
+interface org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+com.ejemplo.EjemploApplication ..> java.lang.Override
+com.ejemplo.EjemploApplication ..> org.springframework.boot.autoconfigure.SpringBootApplication
+com.ejemplo.EjemploApplication ..> org.springframework.context.annotation.Import
+com.ejemplo.EjemploApplication ..> com.ejemplo.configuration.SwaggerConfiguration
+com.ejemplo.EjemploApplication ..> org.springframework.boot.SpringApplication
+com.ejemplo.EjemploApplication ..> org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
+com.ejemplo.EjemploApplication --|> org.springframework.web.servlet.config.annotation.WebMvcConfigurer
+com.ejemplo.ServletInitializer ..> java.lang.Override
+com.ejemplo.ServletInitializer ..> org.springframework.context.annotation.Configuration
+com.ejemplo.ServletInitializer ..> org.springframework.transaction.annotation.EnableTransactionManagement
+com.ejemplo.ServletInitializer ..> org.springframework.boot.builder.SpringApplicationBuilder
+com.ejemplo.ServletInitializer --|> org.springframework.boot.web.servlet.support.SpringBootServletInitializer
+com.ejemplo.configuration.FilterValidation ..> java.lang.Override
+com.ejemplo.configuration.FilterValidation ..> java.io.IOException
+com.ejemplo.configuration.FilterValidation ..> javax.servlet.FilterChain
+com.ejemplo.configuration.FilterValidation ..> javax.servlet.FilterConfig
+com.ejemplo.configuration.FilterValidation ..> javax.servlet.ServletException
+com.ejemplo.configuration.FilterValidation ..> javax.servlet.ServletRequest
+com.ejemplo.configuration.FilterValidation ..> javax.servlet.ServletResponse
+com.ejemplo.configuration.FilterValidation ..> javax.servlet.http.HttpServletRequest
+com.ejemplo.configuration.FilterValidation ..> javax.servlet.http.HttpServletResponse
+com.ejemplo.configuration.FilterValidation --|> javax.servlet.Filter
+com.ejemplo.configuration.GeneralConfiguration ..> java.lang.SuppressWarnings
+com.ejemplo.configuration.GeneralConfiguration ..> org.springframework.context.annotation.Bean
+com.ejemplo.configuration.GeneralConfiguration ..> org.springframework.context.annotation.Configuration
+com.ejemplo.configuration.GeneralConfiguration ..> org.springframework.boot.web.servlet.FilterRegistrationBean
+com.ejemplo.configuration.SwaggerConfiguration ..> org.springframework.context.annotation.Bean
+com.ejemplo.configuration.SwaggerConfiguration ..> org.springframework.context.annotation.Configuration
+com.ejemplo.configuration.SwaggerConfiguration ..> springfox.documentation.swagger2.annotations.EnableSwagger2
+com.ejemplo.configuration.SwaggerConfiguration ..> springfox.documentation.builders.PathSelectors
+com.ejemplo.configuration.SwaggerConfiguration ..> springfox.documentation.builders.RequestHandlerSelectors
+com.ejemplo.configuration.SwaggerConfiguration ..> springfox.documentation.spi.DocumentationType
+com.ejemplo.configuration.SwaggerConfiguration ..> springfox.documentation.spring.web.plugins.Docket
+com.ejemplo.configuration.WebMvcConfiguration ..> java.lang.Override
+com.ejemplo.configuration.WebMvcConfiguration ..> org.springframework.context.annotation.Configuration
+com.ejemplo.configuration.WebMvcConfiguration ..> org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
+com.ejemplo.configuration.WebMvcConfiguration --|> org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
+com.ejemplo.controller.UsuarioController ..> org.springframework.beans.factory.annotation.Autowired
+com.ejemplo.controller.UsuarioController ..> org.springframework.web.bind.annotation.CrossOrigin
+com.ejemplo.controller.UsuarioController ..> org.springframework.web.bind.annotation.RequestBody
+com.ejemplo.controller.UsuarioController ..> org.springframework.web.bind.annotation.RequestMapping
+com.ejemplo.controller.UsuarioController ..> org.springframework.web.bind.annotation.RestController
+com.ejemplo.controller.UsuarioController ..> com.ejemplo.dto.MensajeErrorDTO
+com.ejemplo.controller.UsuarioController ..> com.ejemplo.dto.UsuarioDTO
+com.ejemplo.controller.UsuarioController ..> com.ejemplo.service.UsuarioService
+com.ejemplo.controller.UsuarioController ..> com.ejemplo.vo.UsuarioVO
+com.ejemplo.controller.UsuarioController ..> com.google.gson.Gson
+com.ejemplo.controller.UsuarioController ..> com.google.gson.JsonSyntaxException
+com.ejemplo.controller.UsuarioController ..> java.util.List
+com.ejemplo.controller.UsuarioController ..> java.util.Map
+com.ejemplo.controller.UsuarioController ..> java.util.UUID
+com.ejemplo.controller.UsuarioController ..> org.apache.log4j.Logger
+com.ejemplo.controller.UsuarioController ..> org.springframework.core.env.Environment
+com.ejemplo.controller.UsuarioController ..> org.springframework.http.HttpStatus
+com.ejemplo.controller.UsuarioController ..> org.springframework.http.MediaType
+com.ejemplo.controller.UsuarioController ..> org.springframework.http.ResponseEntity
+com.ejemplo.controller.UsuarioController ..> org.springframework.web.bind.annotation.RequestMethod
+com.ejemplo.dto.UsuarioDTO ..> java.util.Date
+com.ejemplo.dto.UsuarioDTO ..> java.util.UUID
+com.ejemplo.repository.impl.PhoneRepositoryImpl ..> java.lang.Override
+com.ejemplo.repository.impl.PhoneRepositoryImpl ..> org.springframework.beans.factory.annotation.Autowired
+com.ejemplo.repository.impl.PhoneRepositoryImpl ..> org.springframework.stereotype.Service
+com.ejemplo.repository.impl.PhoneRepositoryImpl ..> com.ejemplo.vo.PhoneVO
+com.ejemplo.repository.impl.PhoneRepositoryImpl ..> java.util.List
+com.ejemplo.repository.impl.PhoneRepositoryImpl ..> java.util.UUID
+com.ejemplo.repository.impl.PhoneRepositoryImpl ..> com.ejemplo.repo.PhoneRepo
+com.ejemplo.repository.impl.PhoneRepositoryImpl --|> com.ejemplo.repository.PhoneRepository
+com.ejemplo.repository.impl.UsuarioRepositoryImpl ..> java.lang.Override
+com.ejemplo.repository.impl.UsuarioRepositoryImpl ..> org.springframework.beans.factory.annotation.Autowired
+com.ejemplo.repository.impl.UsuarioRepositoryImpl ..> org.springframework.stereotype.Service
+com.ejemplo.repository.impl.UsuarioRepositoryImpl ..> com.ejemplo.vo.UsuarioVO
+com.ejemplo.repository.impl.UsuarioRepositoryImpl ..> java.util.List
+com.ejemplo.repository.impl.UsuarioRepositoryImpl ..> java.util.Optional
+com.ejemplo.repository.impl.UsuarioRepositoryImpl ..> java.util.UUID
+com.ejemplo.repository.impl.UsuarioRepositoryImpl ..> com.ejemplo.repo.UsuarioRepo
+com.ejemplo.repository.impl.UsuarioRepositoryImpl --|> com.ejemplo.repository.UsuarioRepository
+com.ejemplo.service.UsuarioService ..> org.springframework.beans.factory.annotation.Autowired
+com.ejemplo.service.UsuarioService ..> org.springframework.stereotype.Component
+com.ejemplo.service.UsuarioService ..> com.ejemplo.dto.UsuarioDTO
+com.ejemplo.service.UsuarioService ..> com.ejemplo.util.CommonUtil
+com.ejemplo.service.UsuarioService ..> com.ejemplo.util.TokenUtil
+com.ejemplo.service.UsuarioService ..> com.ejemplo.vo.PhoneVO
+com.ejemplo.service.UsuarioService ..> com.ejemplo.vo.UsuarioVO
+com.ejemplo.service.UsuarioService ..> java.util.ArrayList
+com.ejemplo.service.UsuarioService ..> java.util.Date
+com.ejemplo.service.UsuarioService ..> java.util.LinkedHashMap
+com.ejemplo.service.UsuarioService ..> java.util.List
+com.ejemplo.service.UsuarioService ..> java.util.Map
+com.ejemplo.service.UsuarioService ..> java.util.UUID
+com.ejemplo.service.UsuarioService ..> org.apache.log4j.Logger
+com.ejemplo.service.UsuarioService ..> org.springframework.core.env.Environment
+com.ejemplo.service.UsuarioService ..> com.ejemplo.repository.PhoneRepository
+com.ejemplo.service.UsuarioService ..> com.ejemplo.repository.UsuarioRepository
+com.ejemplo.util.CommonUtil ..> java.util.regex.Matcher
+com.ejemplo.util.CommonUtil ..> java.util.regex.Pattern
+com.ejemplo.util.TokenUtil ..> io.jsonwebtoken.Claims
+com.ejemplo.util.TokenUtil ..> io.jsonwebtoken.Jwts
+com.ejemplo.util.TokenUtil ..> io.jsonwebtoken.SignatureAlgorithm
+com.ejemplo.util.TokenUtil ..> java.util.Date
+com.ejemplo.util.TokenUtil ..> java.util.HashMap
+com.ejemplo.util.TokenUtil ..> java.util.Map
+com.ejemplo.util.TokenUtil ..> java.util.UUID
+com.ejemplo.vo.PhoneVO ..> javax.persistence.Column
+com.ejemplo.vo.PhoneVO ..> javax.persistence.Entity
+com.ejemplo.vo.PhoneVO ..> javax.persistence.Id
+com.ejemplo.vo.PhoneVO ..> javax.persistence.Table
+com.ejemplo.vo.PhoneVO ..> java.util.UUID
+com.ejemplo.vo.PhoneVO --|> java.io.Serializable
+com.ejemplo.vo.UsuarioVO ..> javax.persistence.Column
+com.ejemplo.vo.UsuarioVO ..> javax.persistence.Entity
+com.ejemplo.vo.UsuarioVO ..> javax.persistence.Id
+com.ejemplo.vo.UsuarioVO ..> javax.persistence.OneToMany
+com.ejemplo.vo.UsuarioVO ..> javax.persistence.Table
+com.ejemplo.vo.UsuarioVO ..> javax.persistence.Temporal
+com.ejemplo.vo.UsuarioVO ..> java.util.Date
+com.ejemplo.vo.UsuarioVO ..> java.util.List
+com.ejemplo.vo.UsuarioVO ..> java.util.UUID
+com.ejemplo.vo.UsuarioVO ..> javax.persistence.CascadeType
+com.ejemplo.vo.UsuarioVO ..> javax.persistence.FetchType
+com.ejemplo.vo.UsuarioVO --|> java.io.Serializable
+com.ejemplo.repo.PhoneRepo ..> org.springframework.data.jpa.repository.Query
+com.ejemplo.repo.PhoneRepo ..> org.springframework.stereotype.Repository
+com.ejemplo.repo.PhoneRepo ..> com.ejemplo.vo.PhoneVO
+com.ejemplo.repo.PhoneRepo ..> java.util.List
+com.ejemplo.repo.PhoneRepo ..> java.util.UUID
+com.ejemplo.repo.PhoneRepo --|> org.springframework.data.jpa.repository.JpaRepository
+com.ejemplo.repo.UsuarioRepo ..> org.springframework.data.jpa.repository.Query
+com.ejemplo.repo.UsuarioRepo ..> org.springframework.stereotype.Repository
+com.ejemplo.repo.UsuarioRepo ..> com.ejemplo.vo.UsuarioVO
+com.ejemplo.repo.UsuarioRepo ..> java.util.List
+com.ejemplo.repo.UsuarioRepo ..> java.util.UUID
+com.ejemplo.repo.UsuarioRepo --|> org.springframework.data.jpa.repository.JpaRepository
+com.ejemplo.repository.PhoneRepository ..> com.ejemplo.vo.PhoneVO
+com.ejemplo.repository.PhoneRepository ..> java.util.List
+com.ejemplo.repository.PhoneRepository ..> java.util.UUID
+com.ejemplo.repository.UsuarioRepository ..> com.ejemplo.vo.UsuarioVO
+com.ejemplo.repository.UsuarioRepository ..> java.util.List
+com.ejemplo.repository.UsuarioRepository ..> java.util.UUID
+@enduml
