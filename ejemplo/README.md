@@ -14,3 +14,7 @@ http://localhost:8080/ejemplo/user/create
 http://localhost:8080/ejemplo/user/update
 http://localhost:8080/ejemplo/user/get
 http://localhost:8080/ejemplo/user/delete
+
+Dentro del proyecto (ejemplo\src\main\resources\sql) se encuentra la carpeta sql en donde está el archivo de estructura de la base de datos con la creación de las tablas.
+
+Tanto la expresión regular para la validación de password como para validar el email se configuran en el archivo application.properties.
