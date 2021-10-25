@@ -16,7 +16,7 @@
     <packaging>war</packaging>
     
     <name>ejemplo</name>
-    <description>Ejemplo API RESTful</description>
+    <description>Ejemplo API RESTful pra la creación de usuarios</description>
     
     <properties>
         <java.version>1.8</java.version>
